@@ -1,9 +1,10 @@
 package com.mbs.api_recycler
 
+import UserModel
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mbs.api_recycler.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         adapter = ApiAdapter()
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
         val service = RetrofitService.createGetService()
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<UserModel>>, t: Throwable) {
-
+                t.message?.let { Log.e("erro", it) }
             }
         })
     }

@@ -1,9 +1,12 @@
-package com.mbs.api_recycler
-import com.google.gson.annotations.SerializedName
+data class UserModel(
+    val users: List<Users>
+)
 
-
-data class UserModel (
-
-    @SerializedName("users" ) var users : ArrayList<Users> = arrayListOf()
-
+data class Users(
+    val active: Int,
+    val cpf: String,
+    val email: String,
+    val id: Int,
+    val name: String,
+    val surname: String
 )

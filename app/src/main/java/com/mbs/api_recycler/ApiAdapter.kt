@@ -1,12 +1,14 @@
 package com.mbs.api_recycler
 
+import UserModel
+import Users
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mbs.api_recycler.databinding.RecyclerContentBinding
 
-class ApiAdapter: RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
-    private var userList: List<UserModel> = listOf()
+class ApiAdapter : RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
+    private var userList: List<Users> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val item = RecyclerContentBinding
@@ -22,16 +24,18 @@ class ApiAdapter: RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
         return userList.size
     }
 
-    fun updateUsers(users : List<UserModel>) {
-        userList = users
+    fun updateUsers(users: List<UserModel>) {
+        userList = users[0].users
+        notifyDataSetChanged()
     }
 
 
-    class ViewHolder(private val bind: RecyclerContentBinding) : RecyclerView.ViewHolder(bind.root) {
-        fun bind(user: UserModel) {
-            bind.id.text = user.users[0].id.toString()
-            bind.name.text = user.users[0].name
-            bind.surname.text = user.users[0].surname
+    class ViewHolder(private val bind: RecyclerContentBinding) :
+        RecyclerView.ViewHolder(bind.root) {
+        fun bind(user: Users) {
+            bind.id.text = user.id.toString()
+            bind.name.text = user.name
+            bind.surname.text = user.surname
         }
     }
 }
