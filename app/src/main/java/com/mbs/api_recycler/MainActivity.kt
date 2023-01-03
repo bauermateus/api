@@ -25,16 +25,16 @@ class MainActivity : AppCompatActivity() {
         val service = RetrofitService.createGetService()
         val call = service.list()
 
-        call.enqueue(object : Callback<List<UserModel>> {
+        call.enqueue(object : Callback<UserModel> {
             override fun onResponse(
-                call: Call<List<UserModel>>, response: Response<List<UserModel>>,
+                call: Call<UserModel>, response: Response<UserModel>,
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let { adapter.updateUsers(it) }
                 }
             }
 
-            override fun onFailure(call: Call<List<UserModel>>, t: Throwable) {
+            override fun onFailure(call: Call<UserModel>, t: Throwable) {
                 t.message?.let { Log.e("erro", it) }
             }
         })

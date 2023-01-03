@@ -24,8 +24,8 @@ class ApiAdapter : RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
         return userList.size
     }
 
-    fun updateUsers(users: List<UserModel>) {
-        userList = users[0].users
+    fun updateUsers(users: UserModel) {
+        userList = users.users
         notifyDataSetChanged()
     }
 
@@ -36,6 +36,7 @@ class ApiAdapter : RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
             bind.id.text = user.id.toString()
             bind.name.text = user.name
             bind.surname.text = user.surname
+            bind.email.text = user.email
         }
     }
 }
