@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        val service = RetrofitService.createGetService()
-        val call = service.list()
+        val call = RetrofitService.api.list()
 
         call.enqueue(object : Callback<UserModel> {
             override fun onResponse(
