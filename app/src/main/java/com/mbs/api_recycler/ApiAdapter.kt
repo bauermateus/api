@@ -4,11 +4,13 @@ import UserModel
 import Users
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mbs.api_recycler.databinding.RecyclerContentBinding
 
 class ApiAdapter : RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
-    private var userList: List<Users> = listOf()
+    private var userList: AsyncListDiffer<Users> = AsyncListDiffer(this, DiffCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val item = RecyclerContentBinding
@@ -17,17 +19,26 @@ class ApiAdapter : RecyclerView.Adapter<ApiAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(userList[position])
+        holder.bind(userList.currentList[position])
     }
 
     override fun getItemCount(): Int {
-        return userList.size
+        return userList.currentList.size
     }
 
     fun updateUsers(users: UserModel) {
-        userList = users.users
-        notifyDataSetChanged()
+        userList.submitList(users.users)
     }
+object DiffCallBack: DiffUtil.ItemCallback<Users>() {
+    override fun areItemsTheSame(oldItem: Users, newItem: Users): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Users, newItem: Users): Boolean {
+        return oldItem == newItem
+    }
+
+}
 
 
     class ViewHolder(private val bind: RecyclerContentBinding) :
